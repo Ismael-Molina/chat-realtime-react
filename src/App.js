@@ -10,7 +10,7 @@ function App() {
     {nick: "Re-On", mensaje: "Soy Re-on"},
     {nick: "Fracisco", mensaje: "Soy Francisco"},
     {nick: "Juan", mensaje: "Soy Juan"},
-    {nick: "Pedro", mensaje: "Soy Pedro"}
+    {nick: "Pedro", mensaje: "Soy Pedroo"}
   ]
 
   return (
