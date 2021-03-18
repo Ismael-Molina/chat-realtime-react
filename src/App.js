@@ -3,55 +3,41 @@ import './App.css';
 /****************************************
         Components
 ****************************************/
-import Opcion from './components/Opcion';
-import Resultado from './components/Resultado';
+import TareaForm from './components/TareaForm';
+import Tarea from './components/Tarea';
 
 function App() {
-  const [eleccionJugador, setEleccionJugador] = useState({});
-  const [eleccionMaquina, setEleccionMaquina] = useState({});
-
-  const opciones = [
-    {
-      eleccion: "piedra",
-      derrota: "tijera"
-    },
-    {
-      eleccion: "papel",
-      derrota: "piedra"
-    },
-    {
-      eleccion: "tijera",
-      derrota: "papel"
-    },
-  ];  
-
-  const elegirOpcion = (event) => {
-    const jugador = opciones.find(e => e.eleccion === event.target.textContent);
-    setEleccionJugador(jugador);
-    eleccionRival();
+  const [listaTareas,setListaTareas] = useState([]);
+  const nuevaTarea = (tarea) => {
+    setListaTareas([tarea,...listaTareas])
   }
-
-  const eleccionRival = () => {
-    const eleccion = opciones[Math.floor(Math.random()*opciones.length)];
-    setEleccionMaquina(eleccion);
+  const borrar = (id) => {
+    const listaFiltrada = listaTareas.filter((e,index)=> index!==id);
+    setListaTareas(listaFiltrada);
+  }
+  const actualizarTarea = (id,tarea) => {
+    const listaActualizada = listaTareas.map((e,index)=>{
+      if(index===id){
+        e = tarea;
+      }
+      return e;
+    });
+    setListaTareas(listaActualizada);
   }
 
   return (
     <div className="App">
-      <Resultado jugador={eleccionJugador} maquina={eleccionMaquina}/>
-      <div>
-        <section>
-          <div className="jugador">Jugador</div>
-          <div className="eleccion">{eleccionJugador.eleccion}</div>
-        </section>
-        <section>
-          <div className="maquina">Maquina</div>
-          <div className="eleccion">{eleccionMaquina.eleccion}</div>
-        </section>
-      </div>
-      <div className="opciones">
+      <TareaForm
+        nuevaTarea={nuevaTarea}
+      />
+      <div className="lista">
         {
-          opciones.map((e,index) => <Opcion elegir={elegirOpcion} valor={opciones[index]}/>)
+          listaTareas.map(((e,index) => <Tarea 
+                                  tarea={e}
+                                  borrar={borrar}
+                                  id={index}
+                                  editar={actualizarTarea}
+                                  />))
         }
       </div>
     </div>
