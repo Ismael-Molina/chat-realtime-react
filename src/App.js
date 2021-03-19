@@ -1,42 +1,24 @@
-import React,{ useState, useEffect } from 'react';
+import React,{ useState } from 'react';
 import './App.css';
 /****************************************
         Components
 ****************************************/
+import Personajes from './components/Personajes';
+import FichaPersonaje from './components/FichaPersonaje';
 
 function App() {
-  const [contador,setContador] = useState(0);
-  const [tareas,setTareas] = useState([]);
+  const [personajeId,setPersonajeId] = useState("");
 
-  const incrementar = () => {
-    setContador(prevContador => prevContador+1);
-  }
-
-  const incrementarTareas = () => {
-    setTareas(["nueva tarea", ...tareas]);
-  }
-
-  //component mount
-  useEffect(() => {
-    cargarPaises();
-  },[])
-
-  useEffect(() => {
-    console.log("tarea añadida");
-  },[tareas]);
-
-  //llamada a api externa
-  const cargarPaises = async () => {
-    const data = await fetch("https://covid19.mathdro.id/api/countries");
-    const paises = await data.json();
-    console.log(paises);
+  const seleccionarPersonaje = (id) => {
+    setPersonajeId(id);
+    console.log(personajeId);
   }
 
   return (
     <div className="App">
-      {contador}
-      <button onClick={incrementar}>Incrementar</button>
-      <button onClick={incrementarTareas}>Añadir tarea</button>
+      <h1>Breakong Bad API</h1>
+      <Personajes seleccionarPersonaje={seleccionarPersonaje}/>
+      <FichaPersonaje id={personajeId}/>
     </div>
   );
 }
