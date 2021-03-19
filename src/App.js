@@ -3,43 +3,45 @@ import './App.css';
 /****************************************
         Components
 ****************************************/
-import TareaForm from './components/TareaForm';
-import Tarea from './components/Tarea';
 
 function App() {
-  const [listaTareas,setListaTareas] = useState([]);
-  const nuevaTarea = (tarea) => {
-    setListaTareas([tarea,...listaTareas])
+  const [persona,setPersona] = useState({
+    nombre:"",
+    app:"",
+    apm:""
+  });
+
+  const manejaraFormulario = (event) =>{
+    const {name,value} = event.target;
+    setPersona(prevPersona => ({
+      ...prevPersona,
+      [name]:value
+    }))
   }
-  const borrar = (id) => {
-    const listaFiltrada = listaTareas.filter((e,index)=> index!==id);
-    setListaTareas(listaFiltrada);
+
+  const submit = (event)=>{
+    event.preventDefault();
+    console.log(persona);
   }
-  const actualizarTarea = (id,tarea) => {
-    const listaActualizada = listaTareas.map((e,index)=>{
-      if(index===id){
-        e = tarea;
-      }
-      return e;
-    });
-    setListaTareas(listaActualizada);
-  }
+
 
   return (
     <div className="App">
-      <TareaForm
-        nuevaTarea={nuevaTarea}
-      />
-      <div className="lista">
-        {
-          listaTareas.map(((e,index) => <Tarea 
-                                  tarea={e}
-                                  borrar={borrar}
-                                  id={index}
-                                  editar={actualizarTarea}
-                                  />))
-        }
-      </div>
+      <form onSubmit={submit}>
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" value={persona.nombre} onChange={manejaraFormulario}/>
+        </div>
+        <div>
+            <label for="app">primer apellido:</label>
+            <input type="text" name="app" value={persona.app} onChange={manejaraFormulario}/>
+        </div>
+        <div>
+            <label for="apm">segundo apellido:</label>
+            <input type="text" name="apm" value={persona.apm} onChange={manejaraFormulario}/>
+        </div>
+        <button>Enviar</button>
+      </form>
     </div>
   );
 }
