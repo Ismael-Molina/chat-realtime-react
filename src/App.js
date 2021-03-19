@@ -1,47 +1,42 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import './App.css';
 /****************************************
         Components
 ****************************************/
 
 function App() {
-  const [persona,setPersona] = useState({
-    nombre:"",
-    app:"",
-    apm:""
-  });
+  const [contador,setContador] = useState(0);
+  const [tareas,setTareas] = useState([]);
 
-  const manejaraFormulario = (event) =>{
-    const {name,value} = event.target;
-    setPersona(prevPersona => ({
-      ...prevPersona,
-      [name]:value
-    }))
+  const incrementar = () => {
+    setContador(prevContador => prevContador+1);
   }
 
-  const submit = (event)=>{
-    event.preventDefault();
-    console.log(persona);
+  const incrementarTareas = () => {
+    setTareas(["nueva tarea", ...tareas]);
   }
 
+  //component mount
+  useEffect(() => {
+    cargarPaises();
+  },[])
+
+  useEffect(() => {
+    console.log("tarea añadida");
+  },[tareas]);
+
+  //llamada a api externa
+  const cargarPaises = async () => {
+    const data = await fetch("https://covid19.mathdro.id/api/countries");
+    const paises = await data.json();
+    console.log(paises);
+  }
 
   return (
     <div className="App">
-      <form onSubmit={submit}>
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" value={persona.nombre} onChange={manejaraFormulario}/>
-        </div>
-        <div>
-            <label for="app">primer apellido:</label>
-            <input type="text" name="app" value={persona.app} onChange={manejaraFormulario}/>
-        </div>
-        <div>
-            <label for="apm">segundo apellido:</label>
-            <input type="text" name="apm" value={persona.apm} onChange={manejaraFormulario}/>
-        </div>
-        <button>Enviar</button>
-      </form>
+      {contador}
+      <button onClick={incrementar}>Incrementar</button>
+      <button onClick={incrementarTareas}>Añadir tarea</button>
     </div>
   );
 }
