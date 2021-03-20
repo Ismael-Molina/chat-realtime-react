@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import styles from './FichaPersonaje.module.css';
 
 const FichaPersonaje = (props) => {
     const [personaje,setPersonaje] =useState({});
@@ -22,7 +23,7 @@ const FichaPersonaje = (props) => {
     }
 
     return(
-        <div className="personajeContenedor">
+        <div className={styles.personajeContenedor}>
             <h2>{personaje.name}</h2>
             <div>{personaje.category}</div>
             <img src={personaje.img} alt=""/>
