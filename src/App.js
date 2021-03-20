@@ -1,25 +1,26 @@
-import React,{ useState } from 'react';
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import './App.css';
 /****************************************
         Components
 ****************************************/
-import Personajes from './components/Personajes';
-import FichaPersonaje from './components/FichaPersonaje';
+import NavBar from './components/NavBar';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
 
 function App() {
-  const [personajeId,setPersonajeId] = useState("");
-
-  const seleccionarPersonaje = (id) => {
-    setPersonajeId(id);
-    console.log(personajeId);
-  }
-
   return (
-    <div className="App">
-      <h1>Breakong Bad API</h1>
-      <Personajes seleccionarPersonaje={seleccionarPersonaje}/>
-      <FichaPersonaje id={personajeId}/>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <NavBar/>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/about" exact component={About} />
+          <Route path="/contact" exact component={Contact} />
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
