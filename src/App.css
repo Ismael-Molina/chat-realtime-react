@@ -1,1 +1,12 @@
+.App {
+  text-align: center;
+}
 
+.chat {
+  width: 50%;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow: scroll;
+  border: 1px solid #000;
+  margin: 50px auto;
+}
